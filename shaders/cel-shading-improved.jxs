@@ -1,8 +1,8 @@
 <jittershader name="basic-vert">
 	<param name="LightPosition" type="vec3" default="1. 1. 1." />
-	<param name="DiffuseMaterial" type="vec3" default="1. 1. 1." />
-	<param name="AmbientMaterial" type="vec3" default="1. 1. 1." />
-	<param name="SpecularMaterial" type="vec3" default="1. 1. 1." />
+	<param name="DiffuseMaterial" type="vec3" default="1. 0. 0." />
+	<param name="AmbientMaterial" type="vec3" default="1. 0.337255 0.337255" />
+	<param name="SpecularMaterial" type="vec3" default="0.788235 0.501961 0.501961" />
 	<param name="Shininess" type="float" default="0.6" />
 	<language name="glsl" version="1.2">
 		<bind param="DiffuseMaterial" program="vp" />
