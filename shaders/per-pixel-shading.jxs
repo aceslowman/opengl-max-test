@@ -1,0 +1,60 @@
+<jittershader name="basic-vert">
+	<param name="LightPosition" type="vec3" default="1. 1. 1." />
+	<param name="DiffuseMaterial" type="vec3" default="1. 1. 1." />
+	<param name="AmbientMaterial" type="vec3" default="1. 1. 1." />
+	<param name="SpecularMaterial" type="vec3" default="1. 1. 1." />
+	<param name="Shininess" type="float" default="0.6" />
+	<language name="glsl" version="1.2">
+		<bind param="DiffuseMaterial" program="vp" />
+		<bind param="LightPosition" program="fp" />
+		<bind param="AmbientMaterial" program="fp" />	
+		<bind param="SpecularMaterial" program="fp" />
+		<bind param="Shininess" program="fp" />
+		<program name="vp" type="vertex">
+<![CDATA[
+varying vec3 Normal;
+varying vec3 EyespaceNormal;
+varying vec3 Diffuse;
+
+uniform vec3 DiffuseMaterial;
+
+void main()
+{
+	EyespaceNormal = gl_NormalMatrix * gl_Normal;
+	gl_Position = ftransform(); 
+	Diffuse = DiffuseMaterial;  
+}
+
+]]>		
+		</program>
+		<program name="fp" type="fragment">
+<![CDATA[
+		
+
+varying vec3 EyespaceNormal;
+varying vec3 Diffuse;
+
+uniform vec3 LightPosition;
+uniform vec3 AmbientMaterial;
+uniform vec3 SpecularMaterial;
+uniform float Shininess;
+
+void main(){
+	vec3 N = normalize(EyespaceNormal);
+	vec3 L = normalize(LightPosition);
+	vec3 E = vec3(0, 0, 1);
+	vec3 H = normalize(L + E);
+	
+    float df = max(0.0, dot(N, L));
+    float sf = max(0.0, dot(N, H));
+    sf = pow(sf, Shininess);
+
+    vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
+
+    gl_FragColor = vec4(color, 1.0);
+
+}
+]]>	
+		</program>
+	</language>
+</jittershader>
