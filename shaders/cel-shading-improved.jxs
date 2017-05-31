@@ -22,7 +22,8 @@ void main()
 {
 	EyespaceNormal = gl_NormalMatrix * gl_Normal;
 	gl_Position = ftransform();
-	Diffuse = DiffuseMaterial;
+	//Diffuse = DiffuseMaterial;
+	Diffuse = gl_Color.rgb;
 }
 
 ]]>		
@@ -80,6 +81,7 @@ void main(){
     }
 
     vec3 color = AmbientMaterial + df * Diffuse + sf * SpecularMaterial;
+	//vec3 color = AmbientMaterial + df * Diffuse + sf * gl_SecondaryColor.rgb;
     gl_FragColor = vec4(color, 1.0);
 }
 ]]>	
